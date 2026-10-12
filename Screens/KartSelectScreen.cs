@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using CIS580.GameScreens;
 using CIS580.Input; 
 
-namespace SplitScreenExercise;
+namespace SplitScreenExercise.Screens;
 
 /// <summary>
 /// Represents the kart selection screen where players can choose their karts before starting the game.

@@ -47,7 +47,7 @@ public class SplitScreenExampleGame : Game
         Components.Add(_screenManager);
 
         // Add the initial screen (StartScreen) to the ScreenManager.
-        _screenManager.AddScreen(new StartScreen(), null);
+        _screenManager.AddScreen(new Screens.StartScreen(), null);
 
         base.Initialize();
     }

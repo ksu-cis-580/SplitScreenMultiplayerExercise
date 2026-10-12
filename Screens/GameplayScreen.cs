@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using CIS580.GameScreens;
 using CIS580.Input;
 
-namespace SplitScreenExercise;
+namespace SplitScreenExercise.Screens;
 
 /// <summary>
 /// The main gameplay screen: draws the track with the camera centered on the player's kart.
