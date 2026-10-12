@@ -71,5 +71,10 @@ public class StartScreen : GameScreen
         spriteBatch.DrawString(_instructionFont, _instructions, new Vector2((viewport.Width - instructionsSize.X) / 2, viewport.Height / 2), Color.White);
 
         spriteBatch.End();
+
+
+        // Fade in from black as the screen transitions on (and out as it exits)
+        if (TransitionPosition > 0) ScreenManager.FadeBackBufferToBlack(TransitionPosition);
+
     }
 }

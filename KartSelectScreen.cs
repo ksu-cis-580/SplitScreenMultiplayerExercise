@@ -138,8 +138,7 @@ public class KartSelectScreen : GameScreen
     /// </summary>
     private int Wrap(int slot)
     {
-        int n = _availableColors.Length;
-        return ((slot % n) + n) % n;
+        return slot % _availableColors.Length;
     }
 
     /// <summary>
@@ -162,5 +161,10 @@ public class KartSelectScreen : GameScreen
         _spriteBatch.End();
 
         base.Draw(gameTime);
+
+
+        // Fade in from black as the screen transitions on (and out as it exits)
+        if (TransitionPosition > 0) ScreenManager.FadeBackBufferToBlack(TransitionPosition);
+
     }
 }

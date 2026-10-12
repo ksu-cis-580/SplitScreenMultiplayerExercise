@@ -1,5 +1,5 @@
 # Split Screen Multiplayer Exercise
-This is a starter project for an exercise in setting up split screen multiplayer
+This is a starter project for an exercise in setting up split screen multiplayer in Monogame
 
 The associated video tutorial can be found at [TBD]
 
