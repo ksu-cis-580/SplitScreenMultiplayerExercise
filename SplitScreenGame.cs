@@ -32,7 +32,13 @@ public class SplitScreenExampleGame : Game
     /// </summary>
     public SplitScreenExampleGame()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        _graphics = new GraphicsDeviceManager(this)
+        {
+            // Use a larger resolution
+            PreferredBackBufferWidth = 1600,
+            PreferredBackBufferHeight = 900
+        };
+
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -42,6 +48,8 @@ public class SplitScreenExampleGame : Game
     /// </summary>
     protected override void Initialize()
     {
+        //_graphics.ApplyChanges();
+        
         // Initialize the ScreenManager and add it to the game's components list.
         _screenManager = new ScreenManager(this);
         Components.Add(_screenManager);
@@ -83,7 +91,7 @@ public class SplitScreenExampleGame : Game
     /// <param name="gameTime">The elapsed game time.</param>
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Green);
 
         // Everything else is handled by the ScreenManager, so we don't need to do anything else here.
 
