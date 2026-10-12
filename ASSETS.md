@@ -1,0 +1,1 @@
+"Luckiest Guy" font designed by [Asigmatic](https://fonts.google.com/?query=Astigmatic) and relased under the Apache 2.0 license. Original font files are inlcuded in Content/Fonts/Luckiest_Guy.zip
