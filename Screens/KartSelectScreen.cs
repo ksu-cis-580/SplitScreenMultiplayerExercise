@@ -14,13 +14,10 @@ public class KartSelectScreen : GameScreen
 {
     private SpriteBatch _spriteBatch;
     private SpriteFont _instructionFont;
-    private Vector2 _instructionPositionLine1;
     private string _instructionLine1 = "Select your kart!";
-    private Vector2 _instructionPositionLine2;
     private string _instructionLine2 = "Use the arrow keys or gamepad.";
 
     private Texture2D _kartTexture;
-    private Vector2 _kartPosition;
     private int _currentKartIndex = 0;
 
     // The karts sit on an endless horizontal strip, one viewport width apart.
@@ -80,10 +77,6 @@ public class KartSelectScreen : GameScreen
         _instructionFont = ScreenManager.Game.Content.Load<SpriteFont>("Fonts/InstructionFont");
         _kartTexture = ScreenManager.Game.Content.Load<Texture2D>("Textures/racer");
         _spriteBatch = ScreenManager.SpriteBatch;
-
-        _kartPosition = new Vector2((ScreenManager.GraphicsDevice.Viewport.Width - _kartTexture.Width) / 2, 100);
-        _instructionPositionLine1 = new Vector2((ScreenManager.GraphicsDevice.Viewport.Width - _instructionFont.MeasureString(_instructionLine1).X) / 2, 150 + _kartTexture.Height);
-        _instructionPositionLine2 = new Vector2((ScreenManager.GraphicsDevice.Viewport.Width - _instructionFont.MeasureString(_instructionLine2).X) / 2, _instructionPositionLine1.Y + _instructionFont.LineSpacing);
     }
 
     /// <summary>
@@ -138,7 +131,9 @@ public class KartSelectScreen : GameScreen
     /// </summary>
     private int Wrap(int slot)
     {
-        return slot % _availableColors.Length;
+        // C#'s % can return a negative result, so shift it back into range
+        int n = _availableColors.Length;
+        return ((slot % n) + n) % n;
     }
 
     /// <summary>
@@ -147,17 +142,23 @@ public class KartSelectScreen : GameScreen
     /// <param name="gameTime">The game time.</param>
     public override void Draw(GameTime gameTime)
     {
+        float width = ScreenManager.GraphicsDevice.Viewport.Width;
+
+        // Center the kart and instruction text horizontally in the current viewport
+        var kartPosition = new Vector2((width - _kartTexture.Width) / 2, 100);
+        var instructionPositionLine1 = new Vector2((width - _instructionFont.MeasureString(_instructionLine1).X) / 2, 150 + _kartTexture.Height);
+        var instructionPositionLine2 = new Vector2((width - _instructionFont.MeasureString(_instructionLine2).X) / 2, instructionPositionLine1.Y + _instructionFont.LineSpacing);
+
         _spriteBatch.Begin();
         // At most two karts are on screen mid-slide: the slots on either side of _slot
-        float width = ScreenManager.GraphicsDevice.Viewport.Width;
         int left = (int)MathF.Floor(_slot);
         for (int slot = left; slot <= left + 1; slot++)
         {
-            var position = _kartPosition + new Vector2((slot - _slot) * width, 0);
+            var position = kartPosition + new Vector2((slot - _slot) * width, 0);
             _spriteBatch.Draw(_kartTexture, position, _availableColors[Wrap(slot)]);
         }
-        _spriteBatch.DrawString(_instructionFont, _instructionLine1, _instructionPositionLine1, Color.White);
-        _spriteBatch.DrawString(_instructionFont, _instructionLine2, _instructionPositionLine2, Color.White);
+        _spriteBatch.DrawString(_instructionFont, _instructionLine1, instructionPositionLine1, Color.White);
+        _spriteBatch.DrawString(_instructionFont, _instructionLine2, instructionPositionLine2, Color.White);
         _spriteBatch.End();
 
         base.Draw(gameTime);
